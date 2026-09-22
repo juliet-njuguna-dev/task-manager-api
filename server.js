@@ -20,6 +20,10 @@ app.use(limiter);
 
 const db = initDB();
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Task Manager API is running. See the README for available endpoints.' });
+});
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
