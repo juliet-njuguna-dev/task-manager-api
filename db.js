@@ -1,13 +1,9 @@
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
+const Database = require('better-sqlite3');
 
-async function initDB() {
-  const db = await open({
-    filename: './database.sqlite',
-    driver: sqlite3.Database,
-  });
+function initDB() {
+  const db = new Database('./database.sqlite');
 
-  await db.exec(`
+  db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT UNIQUE NOT NULL,
@@ -15,7 +11,7 @@ async function initDB() {
     )
   `);
 
-  await db.exec(`
+  db.exec(`
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL,
